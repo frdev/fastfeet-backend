@@ -138,7 +138,7 @@ class RecipientController {
     }
   }
 
-  async delete(req, res) {
+  async destroy(req, res) {
     try {
       await Recipient.destroy({ where: { id: req.params.id } });
       return res.json({ message: 'Recipient was deleted' });
