@@ -7,7 +7,6 @@ class CreationMail {
 
   async handle({ data }) {
     const { delivery } = data;
-    console.log(delivery);
 
     await Mail.sendMail({
       to: `${delivery.deliveryman.name} <${delivery.deliveryman.email}>`,
