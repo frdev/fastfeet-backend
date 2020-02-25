@@ -256,7 +256,29 @@ class DeliveryController {
   async destroy(req, res) {
     const { id } = req.params;
 
-    const delivery = await Delivery.findByPk(id);
+    const delivery = await Delivery.findByPk(id, {
+      include: [
+        {
+          model: Recipient,
+          as: 'recipient',
+          attributes: [
+            'id',
+            'name',
+            'zipcode',
+            'street',
+            'number',
+            'complement',
+            'state',
+            'city'
+          ]
+        },
+        {
+          model: Deliveryman,
+          as: 'deliveryman',
+          attributes: ['id', 'name', 'email']
+        }
+      ]
+    });
 
     if (!delivery)
       return res.status(400).json({ error: 'Delivery not found.' });

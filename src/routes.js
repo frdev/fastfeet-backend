@@ -7,7 +7,9 @@ import SessionController from './app/controllers/SessionController';
 import RecipientController from './app/controllers/RecipientController';
 import DeliverymanController from './app/controllers/DeliverymanController';
 import DeliveryController from './app/controllers/DeliveryController';
+import OrderController from './app/controllers/OrderController';
 import FileController from './app/controllers/FileController';
+import DeliveryProblemController from './app/controllers/DeliveryProblemController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -16,6 +18,20 @@ const routes = new Router();
 const upload = multer(multerConfig);
 
 routes.post('/sessions', SessionController.store);
+
+routes.get('/deliveryman/:deliveryman_id/deliveries', OrderController.index);
+routes.put(
+  '/deliveryman/:deliveryman_id/deliveries/:id',
+  upload.single('signature'),
+  OrderController.update
+);
+
+routes.get('/delivery/:delivery_id/problems', DeliveryProblemController.index);
+routes.post('/delivery/:delivery_id/problems', DeliveryProblemController.store);
+routes.delete(
+  '/problem/:id/cancel-delivery',
+  DeliveryProblemController.destroy
+);
 
 /**
  * Temos 2 tipos de middlewares
